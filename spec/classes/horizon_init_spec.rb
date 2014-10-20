@@ -43,7 +43,7 @@ describe 'horizon' do
       end
 
       it 'generates local_settings.py' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           'DEBUG = False',
           "ALLOWED_HOSTS = ['*', ]",
           "SECRET_KEY = 'elj1IWiLoWHgcyYxFVLj7cM5rGOOxWl0'",
@@ -85,7 +85,7 @@ describe 'horizon' do
       end
 
       it 'generates local_settings.py' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           'DEBUG = True',
           "ALLOWED_HOSTS = ['*', ]",
           'CSRF_COOKIE_SECURE = True',
@@ -123,7 +123,7 @@ describe 'horizon' do
       end
 
       it 'generates local_settings.py' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           'OPENSTACK_KEYSTONE_URL = "https://keystone.example.com:4682/v2.0"',
           "    'can_set_mount_point': True,"
         ])
@@ -188,7 +188,7 @@ describe 'horizon' do
       end
 
       it 'AVAILABLE_REGIONS is configured' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           "AVAILABLE_REGIONS = [",
           "    ('http://region-1.example.com:5000/v2.0', 'Region-1'),",
           "    ('http://region-2.example.com:5000/v2.0', 'Region-2'),",
@@ -210,7 +210,7 @@ describe 'horizon' do
       end
 
       it 'POLICY_FILES_PATH and POLICY_FILES are configured' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           "POLICY_FILES_PATH = '/opt/openstack-dashboard'",
           "POLICY_FILES = {",
           "    'identity': 'keystone_policy.json',",
@@ -231,7 +231,7 @@ describe 'horizon' do
       end
 
       it 'uses the custom local_settings.py template' do
-        verify_contents(subject, platforms_params[:config_file], [
+        verify_concat_fragment_contents(subject, 'local_settings.py', [
           '# Custom local_settings.py',
           'DEBUG = True',
           "HORIZON_CONFIG = {",
